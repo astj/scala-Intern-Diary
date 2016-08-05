@@ -15,14 +15,22 @@ object DiaryCLI {
     Context.setup("db.default")
     implicit val ctx = Context.createContext
 
-    val App = createApp("astj")
-    val user = App.currentUser
+    val app = createApp("astj")
+
+    val user = app.currentUser
     process.stderr.println(
       s"Welcome ${user.name} !"
     )
 
-    // TODO: implement
-    help()
+    try {
+      args.toList match {
+        // TODO: implement
+        case "help" :: _ =>
+          help()
+        case _ =>
+          help()
+      }
+    } finally Context.destroy
   }
 
   def help(): Int = {
