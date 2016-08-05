@@ -2,5 +2,5 @@ package interndiary.model
 
 import org.joda.time.LocalDateTime
 
-case class Blog(id: Long, user_id: Long, name: String, created_at: LocalDateTime, updated_at: LocalDateTime) {
+case class Blog(id: Long, userId: Long, name: String, createdAt: LocalDateTime, updatedAt: LocalDateTime) {
 }
