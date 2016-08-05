@@ -1,4 +1,4 @@
-package internbookmark.model
+package interndiiary.model
 
 import org.joda.time.LocalDateTime
 
