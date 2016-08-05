@@ -1,5 +1,6 @@
 package interndiary.cli
 
+import interndiary.service.{DiaryApp,Context}
 import scala.sys.process
 
 object DiaryCLI {
@@ -8,7 +9,18 @@ object DiaryCLI {
     sys.exit(exitStatus)
   }
 
+  def createApp(userName: String): DiaryApp = new DiaryApp(userName)
+
   def run(args: Array[String]): Int = {
+    Context.setup("db.default")
+    implicit val ctx = Context.createContext
+
+    val App = createApp("astj")
+    val user = App.currentUser
+    process.stderr.println(
+      s"Welcome ${user.name} !"
+    )
+
     // TODO: implement
     help()
   }
