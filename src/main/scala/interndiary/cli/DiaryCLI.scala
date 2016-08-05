@@ -27,6 +27,10 @@ object DiaryCLI {
         // TODO: implement
         case "add" :: blogName :: __ =>
           addBlog(app, blogName)
+        case "list" :: blogID :: __ =>
+          listEntries(app, blogID)
+        case "write" :: blogID :: title :: body :: __ =>
+          writeEntry(app, blogID, title, body)
         case "help" :: _ =>
           help()
         case _ =>
@@ -40,6 +44,35 @@ object DiaryCLI {
 
     println(s"added blog '${addedBlog.name}'. id: ${addedBlog.id}")
     0
+  }
+
+  def listEntries(app: DiaryApp, blogId: String)(implicit ctx: Context): Int = {
+    val blog = app.getBlog(blogId.toLong)
+    blog match {
+      case Some(blog) =>
+        println(s"***** Blog ${blog.name} 's entries *****")
+        val entries = app.getEntries(blog)
+        entries.foreach { entry =>
+          println(entry.title)
+        }
+        0
+      case None =>
+        println("blog not found...")
+        1
+    }
+  }
+
+  def writeEntry(app: DiaryApp, blogId: String, title: String, body: String)(implicit ctx: Context): Int = {
+    val blog = app.getBlog(blogId.toLong)
+    blog match {
+      case Some(blog) =>
+        val addedEntry = app.writeEntry(blog, title, body)
+        println(s"wrote a entry with title '${addedEntry.title}'.")
+        0
+      case None =>
+        println("blog not found...")
+        1
+    }
   }
 
   def help(): Int = {
