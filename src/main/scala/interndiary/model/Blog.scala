@@ -1,4 +1,4 @@
-package interndiiary.model
+package interndiary.model
 
 import org.joda.time.LocalDateTime
 
