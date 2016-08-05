@@ -25,6 +25,8 @@ object DiaryCLI {
     try {
       args.toList match {
         // TODO: implement
+        case "add" :: blogName :: __ =>
+          addBlog(app, blogName)
         case "help" :: _ =>
           help()
         case _ =>
@@ -33,13 +35,21 @@ object DiaryCLI {
     } finally Context.destroy
   }
 
+  def addBlog(app: DiaryApp, blogName: String)(implicit ctx: Context): Int = {
+    val addedBlog = app.addBlog(blogName)
+
+    println(s"added blog '${addedBlog.name}'. id: ${addedBlog.id}")
+    0
+  }
+
   def help(): Int = {
     process.stderr.println(
       """
         | usage:
-        |   run add url [comment]
-        |   run list
-        |   run delete url
+        |   run add [name]
+        |   run list [blog_id]
+        |   run write [blog_id] [title] [body]
+        |   run delete [blog_id] [entry_id]
       """.stripMargin)
     1
   }
